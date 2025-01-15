@@ -81,8 +81,6 @@ module.exports = function (app) {
         const board = req.params.board
         const { thread_id, delete_password } = req.body;
 
-        console.log(board, thread_id, delete_password);
-
         if (!board || !thread_id || !delete_password) {
           return res.json({ err: 'input field(s) missing' });
         }
@@ -97,13 +95,11 @@ module.exports = function (app) {
         // check correct delete password for thread
         if (delete_password === thread.delete_password) {
           // correct password, delete thread
-          console.log('correct password')
           thread.deleteOne();
           await dbBoard.save();
           // success
           return res.send('success');
         } else {
-          console.log('incorrect password')
           return res.send('incorrect password');
         }
 
@@ -242,13 +238,11 @@ module.exports = function (app) {
         // check correct delete password for thread
         if (delete_password === reply.delete_password) {
           // correct password, delete thread
-          console.log('correct password')
           reply.text = '[deleted]'
           await dbBoard.save();
           // success
           return res.send('success');
         } else {
-          console.log('incorrect password')
           return res.send('incorrect password');
         }
 
